@@ -25,15 +25,15 @@ const HomePage = () => {
     }, []); // Empty dependency array ensures this runs once on mount
 
     return (
-        <div className="bg-white dark:bg-gray-900 text-black dark:text-white min-h-screen">
+        <div className="bg-black min-h-screen text-white">
             <div className="container mx-auto p-4">
                 <h1 className="text-3xl font-bold mb-5">mdf projects 2023-2024</h1>
                 {data ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {data.map((item) => (
-                            <div key={item.id} className="border border-gray-300 dark:border-gray-700 rounded-lg p-4 h-64 overflow-auto"> {/* Fixed height and overflow for scroll */}
+                            <div key={item.id} className="border-2 border-white rounded-lg p-4 h-64 overflow-auto"> {/* Thicker white border */}
                                 <h2 className="text-xl font-semibold mb-2">{item.projectTitle}</h2>
-                                <p className="text-sm">{item.description}</p> {/* Smaller font size for description */}
+                                <p className="text-sm">{item.description}</p>
                             </div>
                         ))}
                     </div>
