@@ -31,8 +31,12 @@ const HomePage = () => {
                 {data ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {data.map((item) => (
-                            <div key={item.id} className="border-2 border-white rounded-lg p-4 h-64 overflow-auto"> {/* Thicker white border */}
+                            <div key={item.id} className="border-2 border-white rounded-lg p-4 h-64 overflow-auto">
                                 <h2 className="text-xl font-semibold mb-2">{item.projectTitle}</h2>
+                                {item.media && (
+                                    <img src={item.media} alt={item.projectTitle} className="w-full h-auto mb-2" /> // Displaying media
+                                )}
+                                <h1 className="text-l font-semibold mb-2">{item.name}</h1>
                                 <p className="text-sm">{item.description}</p>
                             </div>
                         ))}

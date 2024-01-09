@@ -9,7 +9,9 @@ const fetchAirtableData = async () => {
         id: record.id,
         projectTitle: record.fields.projectTitle,
         description: record.fields.description,
-        mdf: record.fields.mdf
+        name: record.fields.writtenName,
+        department: record.fields.writtenDepartment,
+        media: record.fields.media,
       };
     });
     console.log('Processed Data:', processedData);
