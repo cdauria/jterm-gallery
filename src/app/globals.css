@@ -25,3 +25,9 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.rounded-semi-top {
+  border-top-left-radius: 9999px;
+  border-top-right-radius: 9999px;
+  overflow: hidden;
+}

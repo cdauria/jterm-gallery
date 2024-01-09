@@ -1,52 +1,114 @@
 'use client'
 
-import React, {useState, useEffect} from 'react';
-
+import React, { useState, useEffect } from 'react';
 
 const HomePage = () => {
-    // State to store the fetched data
-    const [data, setData] = useState(null);
+  const [data, setData] = useState(null);
+  const [showCopyButton, setShowCopyButton] = useState(false);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('/api/airtable/'); // Replace with your actual API route
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const result = await response.json();
-                setData(result.result); // Assuming your API returns an object with a 'result' property
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/airtable/');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const result = await response.json();
+        setData(result.result); // Assuming your API returns an object with a 'result' property
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-        fetchData();
-    }, []); // Empty dependency array ensures this runs once on mount
+    fetchData();
+  }, []);
 
-    return (
-        <div className="bg-black min-h-screen text-white">
-            <div className="container mx-auto p-4">
-                <h1 className="text-3xl font-bold mb-5">mdf projects 2023-2024</h1>
-                {data ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {data.map((item) => (
-                            <div key={item.id} className="border-2 border-white rounded-lg p-4 h-64 overflow-auto">
-                                <h2 className="text-xl font-semibold mb-2">{item.projectTitle}</h2>
-                                {item.media && (
-                                    <img src={item.media} alt={item.projectTitle} className="w-full h-auto mb-2" /> // Displaying media
-                                )}
-                                <h1 className="text-l font-semibold mb-2">{item.name}</h1>
-                                <p className="text-sm">{item.description}</p>
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <p>Loading...</p>
+  const copyToClipboardAsMarkdown = () => {
+    // Convert data to Markdown string
+    const markdown = data.map(item => {
+      return `# ${item.projectTitle}
+  
+  ${item.media ? `![${item.projectTitle}](${item.media})` : ''}
+  
+  ## ${item.name}
+  
+  ${item.description}
+  `;
+    }).join('\n\n');
+  
+    // Copy to clipboard
+    navigator.clipboard.writeText(markdown).then(function() {
+      /* clipboard successfully set */
+      alert('Markdown copied to clipboard!');
+    }, function() {
+      /* clipboard write failed */
+      alert('Failed to copy markdown to clipboard');
+    });
+  
+    // Hide button
+    setShowCopyButton(false);
+  };
+
+  return (
+    <div className="bg-white min-h-screen text-black">
+      <div className="container mx-auto p-4">
+        <h1 className="text-3xl font-sans mb-5">MDF Projects 2023-2024</h1>
+        {data ? (
+          <div className="grid grid-cols-3 gap-4 auto-rows-auto">
+            {data.map((item) => (
+              <div 
+                key={item.id} 
+                className="bg-white text-black rounded-lg p-3 mb-4"
+                style={{ borderTop: `6px solid ${getRandomPastelColor()}`, borderRight: `6px solid ${getRandomPastelColor()}`, borderLeft: `6px solid ${getRandomPastelColor()}`, borderBottom: `6px solid ${getRandomPastelColor()}` }}
+              >
+                <h2 className="text-2xl font-sans mb-2">{item.projectTitle}</h2>
+                {item.media && (
+                  <img src={item.media} alt={item.projectTitle} className="w-full h-auto mb-2" /> // Displaying media
                 )}
-            </div>
-        </div>
-    );
+                <h1 className="normal text-l font-sans mb-2">{item.name}</h1>
+                <p className="text-sm font-sans">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>Loading...</p>
+        )}
+        <button 
+          onClick={() => setShowCopyButton(!showCopyButton)}
+          style={{ 
+            borderTop: `6px solid ${getRandomPastelColor()}`, 
+            borderRight: `6px solid ${getRandomPastelColor()}`, 
+            borderLeft: `6px solid ${getRandomPastelColor()}`, 
+            borderBottom: `6px solid ${getRandomPastelColor()}`,
+            fontWeight: 'bold'
+          }}
+        >
+          Click to copy Markdown
+        </button>
+        {showCopyButton && (
+          <button 
+            onClick={copyToClipboardAsMarkdown}
+            style={{ 
+              borderTop: `6px solid ${getRandomPastelColor()}`, 
+              borderRight: `6px solid ${getRandomPastelColor()}`, 
+              borderLeft: `6px solid ${getRandomPastelColor()}`, 
+              borderBottom: `6px solid ${getRandomPastelColor()}`,
+              fontWeight: 'bold'
+            }}
+          >
+            Copy as Markdown
+          </button>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default HomePage;
+
+function getRandomPastelColor() {
+  const h = Math.floor(Math.random() * 360);
+  const s = 80; // Lower saturation for pastel
+  const l = 85; // Higher lightness for pastel
+  return `hsl(${h},${s}%,${l}%)`;
+}
