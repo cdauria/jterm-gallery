@@ -19,15 +19,11 @@
 
   .card {
     width: 100%; /* Adjust width for print */
-    page-break-after: always; /* Avoid breaking content across pages */
+    page-break-after: always; /* one card per page */
     border: none;
     margin-bottom: 0.5rem; /* Adjust margin for print */
     padding: 0.25rem; /* Adjust padding for print */
-  }
-
-  .title, .projectTitle, .name, .description {
-    page-break-inside: avoid; /* Avoid breaking titles/descriptions across pages */
-  }
+  } 
 
   .button {
     display: none; /* Hide buttons */
@@ -47,7 +43,7 @@
 }
 
 .title {
-  font-size: 65px;
+  font-size: 40px;
   font-family: 'Epilogue' sans-serif;
   font-weight: 600;
   margin-bottom: 2rem;
@@ -69,7 +65,7 @@
 }
 
 .projectTitle {
-  font-size: 37px;
+  font-size: 30px;
   font-weight: 600;
   font-family: 'Epilogue' sans-serif;
   font-weight: bold;
@@ -78,7 +74,7 @@
 }
 
 .name {
-  font-size: 26px;
+  font-size: 20px;
   font-family: 'Epilogue' sans-serif;
   font-weight: bold;
   font-weight: 600;
@@ -93,7 +89,7 @@
 }
 
 .description {
-  font-size: 18px;
+  font-size: 16px;
   font-family: 'Tenor Sans' sans-serif;
   color: black;
 }
