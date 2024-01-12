@@ -19,7 +19,7 @@
 
   .card {
     width: 100%; /* Adjust width for print */
-    page-break-inside: avoid; /* Avoid breaking content across pages */
+    page-break-after: always; /* Avoid breaking content across pages */
     border: none;
     margin-bottom: 0.5rem; /* Adjust margin for print */
     padding: 0.25rem; /* Adjust padding for print */
@@ -69,16 +69,18 @@
 }
 
 .projectTitle {
-  font-size: 33px;
+  font-size: 37px;
   font-weight: 600;
   font-family: 'Epilogue' sans-serif;
+  font-weight: bold;
   color: black;
   margin-bottom: 1rem;
 }
 
 .name {
-  font-size: 25px;
+  font-size: 26px;
   font-family: 'Epilogue' sans-serif;
+  font-weight: bold;
   font-weight: 600;
   color: black;
   margin-top: 1rem;
