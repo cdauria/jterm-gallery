@@ -31,3 +31,11 @@ body {
   border-top-right-radius: 9999px;
   overflow: hidden;
 }
+
+html {
+  font-family: var(--font-inter);
+}
+ 
+h1 {
+  font-family: var(--font-roboto-mono);
+}

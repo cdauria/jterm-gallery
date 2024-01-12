@@ -1,6 +1,8 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
+import styles from '../../components/projectCard.module.css'
+import { inter, roboto_mono, nunito_sans, montserrat, hind, lora, merriweather, epilogue, alfa_slab_one, gentium_book_plus, dm_sans, dm_serif_display, playfair_display, archivo_black, red_hat_display, tenor_sans, archivo_narrow } from '../fonts'
 
 const HomePage = () => {
   const [data, setData] = useState(null);
@@ -39,7 +41,7 @@ const HomePage = () => {
     // Copy to clipboard
     navigator.clipboard.writeText(markdown).then(function() {
       /* clipboard successfully set */
-      alert('Markdown copied to clipboard!');
+      alert('markdown copied to clipboard!');
     }, function() {
       /* clipboard write failed */
       alert('Failed to copy markdown to clipboard');
@@ -49,24 +51,27 @@ const HomePage = () => {
     setShowCopyButton(false);
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
-    <div className="bg-white min-h-screen text-black">
-      <div className="container mx-auto p-4">
-        <h1 className="text-3xl font-sans mb-5">MDF Projects 2023-2024</h1>
+    <div className={`${styles.container}`}>
+      <div className={styles.innerContainer}>
+      <h1 className={`${epilogue.className} ${styles.title}`}>media & design fellow projects</h1>
         {data ? (
-          <div className="grid grid-cols-3 gap-4 auto-rows-auto">
+          <div className={styles.grid}>
             {data.map((item) => (
               <div 
                 key={item.id} 
-                className="bg-white text-black rounded-lg p-3 mb-4"
-                style={{ borderTop: `6px solid ${getRandomPastelColor()}`, borderRight: `6px solid ${getRandomPastelColor()}`, borderLeft: `6px solid ${getRandomPastelColor()}`, borderBottom: `6px solid ${getRandomPastelColor()}` }}
+                className={styles.card}
               >
-                <h2 className="text-2xl font-sans mb-2">{item.projectTitle}</h2>
+                <h2 className={`${epilogue.className} ${styles.projectTitle}`}>{item.projectTitle}</h2>
                 {item.media && (
-                  <img src={item.media} alt={item.projectTitle} className="w-full h-auto mb-2" /> // Displaying media
+                  <img src={item.media} alt={item.projectTitle} className={styles.image} /> // Displaying media
                 )}
-                <h1 className="normal text-l font-sans mb-2">{item.name}</h1>
-                <p className="text-sm font-sans">{item.description}</p>
+                <h1 className={`${epilogue.className} ${styles.name}`}>{item.name}</h1>
+                <p className={`${tenor_sans.className} ${styles.description}`}>{item.description}</p>
               </div>
             ))}
           </div>
@@ -75,28 +80,16 @@ const HomePage = () => {
         )}
         <button 
           onClick={() => setShowCopyButton(!showCopyButton)}
-          style={{ 
-            borderTop: `6px solid ${getRandomPastelColor()}`, 
-            borderRight: `6px solid ${getRandomPastelColor()}`, 
-            borderLeft: `6px solid ${getRandomPastelColor()}`, 
-            borderBottom: `6px solid ${getRandomPastelColor()}`,
-            fontWeight: 'bold'
-          }}
+          className={styles.button}
         >
-          Click to copy Markdown
+          click to copy markdown
         </button>
         {showCopyButton && (
           <button 
             onClick={copyToClipboardAsMarkdown}
-            style={{ 
-              borderTop: `6px solid ${getRandomPastelColor()}`, 
-              borderRight: `6px solid ${getRandomPastelColor()}`, 
-              borderLeft: `6px solid ${getRandomPastelColor()}`, 
-              borderBottom: `6px solid ${getRandomPastelColor()}`,
-              fontWeight: 'bold'
-            }}
+            className={styles.button}
           >
-            Copy as Markdown
+            copy as markdown
           </button>
         )}
       </div>
@@ -104,11 +97,5 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
 
-function getRandomPastelColor() {
-  const h = Math.floor(Math.random() * 360);
-  const s = 80; // Lower saturation for pastel
-  const l = 85; // Higher lightness for pastel
-  return `hsl(${h},${s}%,${l}%)`;
-}
+export default HomePage;
